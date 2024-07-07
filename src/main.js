@@ -24,14 +24,14 @@ async function run() {
       additions: 0,
       deletions: 0,
       changes: 0
-    }
+    };
 
     diffData = changedFiles.reduce((acc, file) => {
       acc.additions += file.additions
       acc.deletions += file.deletions
       acc.changes += file.changes
       return acc
-    }, diffData)
+    }, diffData);
 
     await octokit.rest.issues.createComment({
       owner,
@@ -43,7 +43,7 @@ async function run() {
         - ${diffData.additions} additions \n
         - ${diffData.deletions} deletions
       `
-    })
+    });
 
     for (const file of changedFiles) {
       const fileExtension = file.filename.split('.').pop()
@@ -69,7 +69,7 @@ async function run() {
         repo,
         issue_number: pr_number,
         labels: [label]
-      })
+      });
     }
   } catch (error) {
     // Fail the workflow run if an error occurs
